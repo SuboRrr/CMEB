@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Person Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/details.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Информация о человеке</h1>
+        <p><strong>Имя:</strong> {{ name }}</p>
+        <p><strong>Дата рождения:</strong> {{ dob }}</p>
+
+        {% if department == 1 %}
+            <p><strong>Автомобиль:</strong> {{ results1[0]['vehicle'] if results1 else 'Нет информации' }}</p>
+            <h2>Информация из смежного ведомства</h2>
+            <ul>
+                {% for person in results2 %}
+                    <li>{{ person.address }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p><strong>Адрес:</strong> {{ results1[0]['address'] if results1 else 'Нет информации' }}</p>
+            <h2>Информация из смежного ведомства</h2>
+            <ul>
+                {% for person in results2 %}
+                    <li>{{ person.vehicle }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <a href="{{ url_for('department1' if department == 1 else 'department2') }}" class="button">Назад</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Person Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/details.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Информация о человеке</h1>
+        <p><strong>Имя:</strong> {{ name }}</p>
+        <p><strong>Дата рождения:</strong> {{ dob }}</p>
+        <h2>Автомобиль</h2>
+        <ul class="info-list">
+            {% for result in results1 %}
+                <li>{{ result['name'] }} - {{ result['dob'] }} - {{ result['vehicle'] }}</li>
+            {% endfor %}
+        </ul>
+        <h2>Информация из смежного ведомства</h2>
+        <ul class="info-list">
+            {% for result in results2 %}
+                <li>{{ result['name'] }} - {{ result['dob'] }} - {{ result['address'] }}</li>
+            {% endfor %}
+        </ul>
+        <button id="back-btn">Назад</button>
+    </div>
+    <script>
+        document.getElementById('back-btn').addEventListener('click', function() {
+            window.location.href = '/department' + {{ department }};
+        });
+    </script>
+</body>
+</html>

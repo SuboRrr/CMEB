@@ -1,0 +1,30 @@
+<!-- results.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результаты поиска</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/results.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Результаты поиска</h1>
+        {% if department == 1 %}
+            {% for row in results1 %}
+                <a href="{{ url_for('person_details', name=row[0], dob=row[1], department=department) }}">
+                    {{ row[0] }} - {{ row[1] }}
+                </a>
+            {% endfor %}
+        {% else %}
+            {% for row in results2 %}
+                <a href="{{ url_for('person_details', name=row[0], dob=row[1], department=department) }}">
+                    {{ row[0] }} - {{ row[1] }}
+                </a>
+            {% endfor %}
+        {% endif %}
+        <br><br>
+        <a href="/">Назад</a>
+    </div>
+</body>
+</html>

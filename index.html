@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Выберите ведомство</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="column">
+            <h2>База данных ведомства 1</h2>
+            <div id="department1-list" class="department-list">
+                <!-- Данные из Ведомства 1 будут загружены сюда -->
+            </div>
+            <button class="btn btn-department1" onclick="window.location.href='/department1'">Войти</button>
+        </div>
+        <div class="column">
+            <h2>База данных ведомства 2</h2>
+            <div id="department2-list" class="department-list">
+                <!-- Данные из Ведомства 2 будут загружены сюда -->
+            </div>
+            <button class="btn btn-department2" onclick="window.location.href='/department2'">Войти</button>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Загрузка списка из Ведомства 1
+            $.get('/list_department1', function(data) {
+                $('#department1-list').empty();
+                if (data.length > 0) {
+                    data.forEach(function(person) {
+                        $('#department1-list').append('<div class="list-item">' + person.name + ' - ' + person.dob + ' - ' + person.vehicle + '</div>');
+                    });
+                } else {
+                    $('#department1-list').append('<div class="list-item">Нет данных</div>');
+                }
+            });
+
+            // Загрузка списка из Ведомства 2
+            $.get('/list_department2', function(data) {
+                $('#department2-list').empty();
+                if (data.length > 0) {
+                    data.forEach(function(person) {
+                        $('#department2-list').append('<div class="list-item">' + person.name + ' - ' + person.dob + ' - ' + person.address + '</div>');
+                    });
+                } else {
+                    $('#department2-list').append('<div class="list-item">Нет данных</div>');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

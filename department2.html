@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Department 2</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/department2.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#name').on('input', function() {
+                var input = $(this).val();
+                var formattedInput = input.replace(/\b\w/g, function(char) {
+                    return char.toUpperCase();
+                });
+                $(this).val(formattedInput);
+                $.get('/autocomplete_department2', { q: formattedInput }, function(data) {
+                    $('#results').empty();
+                    if(data.length > 0) {
+                        data.forEach(function(person) {
+                            var item = $('<div class="result-item">').html('<a href="/person_details?name=' + encodeURIComponent(person.name) + '&dob=' + encodeURIComponent(person.dob) + '&department=2">' + person.name + ' - ' + person.dob + '</a>');
+                            $('#results').append(item);
+                        });
+                    } else {
+                        $('#results').append('<div class="result-item">Результатов не найдено</div>');
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Поиск по ведомству 2 (Человек + Адрес)</h1>
+        <label for="name">Фамилия Имя Отчество:</label>
+        <input type="text" id="name">
+        <div id="results"></div>
+        <div class="button-container">
+            <button onclick="window.location.href='/'">Назад</button>
+        </div>
+    </div>
+</body>
+</html>
